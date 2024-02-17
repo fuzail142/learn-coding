@@ -1,0 +1,63 @@
+*{
+    margin: 0px auto;
+    padding: 0px; align-items: center;
+}
+body{
+    background-color: rgb(137, 255, 90);
+   
+}
+.box {
+  
+     background-color: white;
+     height: 380spx;
+     width: 330px;
+     color: rgb(5, 2, 10);
+     display: inline-block;
+     margin:0px auto;
+     font-family: monospace;
+    
+}
+p{
+    font: 16px;
+    font-family: sans-serif;
+}
+.div1{
+    margin: 20px auto;
+text-align: center;
+text-decoration: underline;
+}
+
+.div3{
+    margin: 0px auto;
+text-align: center;
+text-decoration: underline;
+display: inline-block;
+
+}
+
+h1{
+    background-color: aqua;
+    margin: 0px auto;
+    width: 250px;
+}
+button{
+    background-color: yellow;
+    font-style: bold;
+    width: 40px;
+    text-decoration-color: white;
+}
+button :hover{
+    background-color: rgb(255, 40, 40);
+    transform-style: preserve-3d;
+    size: 30px;
+    height: max-content;
+    text-transform: capitalize;
+}
+.box :hover{
+    background-color: red;
+    transform-style: preserve-3d;
+   text-transform: capitalize;
+transform: scale3d(1.2
+);
+
+}
