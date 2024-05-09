@@ -1,0 +1,44 @@
+/* styles.css */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #125c2d;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    margin-top: 160px;
+}
+.container {
+    width: 100%;
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 45px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+#expense-form {
+    margin-bottom: 20px;
+}
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #5cb85c;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #4cae4c;
+}
+.total-amount {
+    margin-top: 20px;
+    text-align: right;
+}
