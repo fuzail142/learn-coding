@@ -4,6 +4,7 @@ import { ref, onValue } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-
 
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
+
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value.trim();
 
@@ -11,16 +12,18 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
+        // Redirect based on user type
         const userRef = ref(database, 'students/' + user.uid);
         onValue(userRef, (snapshot) => {
             const userData = snapshot.val();
             if (userData) {
                 if (userData.userType === 'admin') {
-                    window.location.href = 'admin.html';
+                    window.location.href = 'admin.html';  // Redirect to admin portal
                 } else {
-                    window.location.href = 'student.html';
+                    window.location.href = 'student.html';  // Redirect to student portal
                 }
             } else {
+                console.error('No user data found');
                 document.getElementById('loginMessage').textContent = 'User data not found.';
             }
         });

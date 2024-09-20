@@ -1,67 +1,46 @@
-import { auth } from './firebaseConfig.js';
 import { createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
 import { ref, set } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
+import { auth, database } from './firebaseConfig.js';
 
-// Check if user is authenticated
-auth.onAuthStateChanged((user) => {
-    if (!user) {
-        window.location.href = 'login.html'; // Redirect to login if not authenticated
-    }
-});
-
-document.getElementById('addUserForm').addEventListener('submit', async (e) => {
+// Add Student Function
+document.getElementById('addStudentForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const firstName = document.getElementById('firstName').value;
-    const lastName = document.getElementById('lastName').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const userType = document.getElementById('userType').value;
+
+    const studentCNIC = document.getElementById('studentCNIC').value.trim();
+    const studentName = document.getElementById('studentName').value.trim();
+    const studentEmail = document.getElementById('studentEmail').value.trim();
+    const studentPassword = document.getElementById('studentPassword').value.trim();
 
     try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const userId = userCredential.user.uid;
+        // Create user in Firebase Authentication
+        const userCredential = await createUserWithEmailAndPassword(auth, studentEmail, studentPassword);
+        const user = userCredential.user;
 
-        // Store user details in Realtime Database
-        await set(ref(database, 'students/' + userId), {
-            firstName,
-            lastName,
-            email,
-            userType
+        // Save student data in Realtime Database
+        await set(ref(database, 'students/' + user.uid), {
+            cnic: studentCNIC,
+            name: studentName,
+            email: studentEmail,
+            userType: 'student'
         });
 
-        document.getElementById('addUserMessage').textContent = 'User added successfully!';
+        document.getElementById('addStudentMessage').textContent = 'Student added successfully!';
     } catch (error) {
-        document.getElementById('addUserMessage').textContent = 'Error adding user: ' + error.message;
+        document.getElementById('addStudentMessage').textContent = 'Error adding student: ' + error.message;
     }
 });
-import { auth, database } from './firebaseConfig.js';
-import { createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js';
-import { ref, set } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js';
 
-// Function to add user
-document.getElementById('addUserForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    // Get values from form
-    // Your existing user addition logic here...
-});
-
-// Function to upload marks
+// Upload Marks Function
 document.getElementById('uploadMarksForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    
-    const studentId = document.getElementById('studentId').value; // CNIC
-    const course = document.getElementById('course').value;
-    const marks = document.getElementById('marks').value;
-    const totalMarks = document.getElementById('totalMarks').value;
-    const grade = document.getElementById('grade').value;
+
+    const studentId = document.getElementById('studentId').value.trim();
+    const course = document.getElementById('course').value.trim();
+    const marks = document.getElementById('marks').value.trim();
+    const totalMarks = document.getElementById('totalMarks').value.trim();
+    const grade = document.getElementById('grade').value.trim();
 
     try {
-        // Ensure the user is authenticated and has the proper role
-        const user = auth.currentUser;
-        if (!user) {
-            throw new Error('User not authenticated.');
-        }
-
         // Store marks in Realtime Database
         await set(ref(database, 'marks/' + studentId + '/' + course), {
             marks,
@@ -74,6 +53,3 @@ document.getElementById('uploadMarksForm').addEventListener('submit', async (e) 
         document.getElementById('uploadMarksMessage').textContent = 'Error uploading marks: ' + error.message;
     }
 });
-
-// Function to get all students
-// Your existing logic to display students...
